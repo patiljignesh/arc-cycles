@@ -29,9 +29,15 @@
 import UIKit
 
 class MainViewController: UIViewController {
+  
+  // Object is initialized but never deallocated since
+  // in is contained in the View Controller which never goes
+  // out of scope. This also means that object is never removed
+  // from the memory.
+  let user = User(name: "John")
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    let user = User(name: "John")
   }
 }
 
