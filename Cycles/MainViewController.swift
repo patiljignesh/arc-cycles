@@ -34,15 +34,27 @@ class MainViewController: UIViewController {
   // in is contained in the View Controller which never goes
   // out of scope. This also means that object is never removed
   // from the memory.
-  let user = User(name: "John")
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    runScenario()
+  }
+  
+  func runScenario() {
+    let user = User(name: "John")
+    let iphone = Phone(model: "iPhone Pro 12 Max")
+    user.add(phone: iphone)
   }
 }
 
 class User {
   let name: String
+  private(set) var phones: [Phone] = []
+  
+  func add(phone: Phone) {
+    phones.append(phone)
+    phone.owner = self
+  }
   
   init(name: String) {
     self.name = name
@@ -51,5 +63,19 @@ class User {
   
   deinit {
     print("Deallocating user named: \(name)")
+  }
+}
+
+class Phone {
+  let model: String
+  var owner: User?
+  
+  init(model: String) {
+    self.model = model
+    print("Phone \(model) was initialized.")
+  }
+  
+  deinit {
+    print("Deallocating phone named: \(model)")
   }
 }
